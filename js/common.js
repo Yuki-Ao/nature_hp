@@ -31,6 +31,7 @@ $(function(){
   
   // video size set
   $(window).on('load',function(){
+      setVideo();
   });
   
   var resizeTimer = false;
@@ -39,9 +40,25 @@ $(function(){
       clearTimeout(resizeTimer);
     }
     resizeTimer = setTimeout(function() {
+      setVideo();
     }, 100);
   });
   
+  function setVideo(){
+    var baseW = 1280;
+    var baseH = 720;
+    
+    /* footer video */
+    var footerW = $('.footer_video_wrapper').outerWidth();
+    var footerH = $('.footer_video_wrapper').outerHeight();
+    var footerRation = getFooterRatio(footerW, footerH, baseW, baseH);
+    $('.footer_video_wrapper .video').css({
+			'width':parseInt(baseW * footerRation)+2,
+			'height':parseInt(baseH * footerRation)+2,
+			'margin-top':-(parseInt(baseH * footerRation) - footerH) / 2,
+			'margin-left':-(parseInt(baseW * footerRation) - footerW) / 2
+		});
+  }
   /* footer video */
   function getFooterRatio(footerW, footerH, baseW, baseH) {
 		if ((footerH / footerW) < (baseH / baseW))  return (footerW / baseW);
