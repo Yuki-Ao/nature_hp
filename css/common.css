@@ -2036,6 +2036,11 @@
   #recruit .recruit_photo_wrapper .photo{
     position: absolute;
   }
+
+  #recruit .recruit_photo_wrapper .photo img{
+    width: 100%;
+  }
+
   #recruit .txt{
     margin-top: 30px;
   }
