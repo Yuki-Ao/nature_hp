@@ -1241,7 +1241,7 @@
     overflow-y: hidden; /* 縦方向のスクロールを防ぐ */
     padding: 20px;
     scroll-behavior: smooth;
-    width: calc(100% - 50px); /* コンテナの幅を画面幅内に収める */
+    width: calc(100% - 20px); /* コンテナの幅を画面幅内に収める */
     box-sizing: border-box; /* パディングを含めて幅を計算 */
   }
 
@@ -1479,6 +1479,7 @@
 
   #recruit .recruit_photo_wrapper .photo img{
     width: 100%;
+    height: auto;
   }
 
   #recruit .txt{
@@ -1782,7 +1783,7 @@
     gap: 16px;
     overflow-x: auto; /* 横スクロールを有効にする */
     overflow-y: hidden; /* 縦方向のスクロールを防ぐ */
-    padding: 10px;
+    padding: 20px;
     scroll-behavior: smooth;
     width: calc(100% - 20px); /* コンテナの幅を画面幅内に収める */
     box-sizing: border-box; /* パディングを含めて幅を計算 */
@@ -1819,12 +1820,10 @@
   #about .item .photo_wrapper .photo img{
     width: 100%;
   }
-
   #about .item .txt{
     width: 100%;
     margin-top: 20px;
   }
-
   #about .item .txt h3{
     bottom: 60px;
     font-family: 'Noto Sans JP', sans-serif;
@@ -1836,16 +1835,13 @@
     margin: 0 auto;
     left: 10%;
   }
-
   #about .item.reverse .txt{
     text-align: right;
   }
-
   #about .item.reverse .txt h3{
     text-align: right;
     right: 10%;
   }
-
   #about .about_photo{
     display: flex;
     flex-wrap: wrap;
@@ -1853,16 +1849,13 @@
     width: 100%;
     margin-top: 60px;
   }
-
   #about .about_photo li{
     width: 50%;
   }
-
   /* access */
   #access.contents_wrapper{
     margin-top: 60px;
   }
-
   #access .map{
     height: 0;
     overflow: hidden;
@@ -1870,7 +1863,6 @@
     position: relative;
     margin-top: 40px;
   }
-
   #access .map iframe {
     position: absolute;
     left: 0;
@@ -1878,20 +1870,20 @@
     height: 100%;
     width: 100%;
   }
-
   #access .info_area{
     display: flex;
     flex-direction: column;
   }
-
-  #access .info_area .photo{
+  #access .info_area .access_photo_wrapper{
     width: 100%;
-    position: relative;
-    overflow: hidden;
+  }
+  #access .info_area .access_photo_wrapper .photo{
+    width: 100%;
   }
 
-  #access .info_area .photo img{
+  #access .info_area .access_photo_wrapper .photo img{
     width: 100%;
+    height: auto;
   }
 
   #access .info_area .info{
@@ -2039,6 +2031,7 @@
 
   #recruit .recruit_photo_wrapper .photo img{
     width: 100%;
+    height: auto;
   }
 
   #recruit .txt{
