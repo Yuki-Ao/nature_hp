@@ -1023,13 +1023,17 @@
     height: 100%;
   }
 
-  header .gnav {
-    display: none;
+  header .gnav.active {
+    display: block;
     position: absolute;
     top: 60px;
     width: 100%;
-    height: 100vh;
+    height: 80vh;
     background: #fff;
+  }
+
+  header .gnav {
+    display: none;
   }
 
   header .gnav ul {
@@ -1048,6 +1052,11 @@
   header .gnav ul li a {
     display: block;
   }
+
+  header a:link { color: #3C3835; text-decoration:none; }
+  header a:visited { color: #3C3835; text-decoration:none; }
+  header a:hover { color: #4BBE92; text-decoration:none; }
+  header a:active { color: #4BBE92; text-decoration:none; }
 
   header .snav {
     position: absolute;
@@ -1558,13 +1567,17 @@
     height: 100%;
   }
 
-  header .gnav {
-    display: none;
+  header .gnav.active {
+    display: block;
     position: absolute;
     top: 60px;
     width: 100%;
-    height: 100vh;
+    height: 80vh;
     background: #fff;
+  }
+
+  header .gnav {
+    display: none;
   }
 
   header .gnav ul {
@@ -1602,6 +1615,11 @@
     color: #3C3835;
     text-decoration: none;
   }
+
+  header  .gnav a:link { color: #3C3835; text-decoration:none; }
+  header .gnav a:visited { color: #3C3835; text-decoration:none; }
+  header .gnav a:hover { color: #4BBE92; text-decoration:none; }
+  header .gnav a:active { color: #4BBE92; text-decoration:none; }
 
   header .snav ul .reserve {
     display: flex;
