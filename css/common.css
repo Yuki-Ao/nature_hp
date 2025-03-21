@@ -46,6 +46,26 @@
     padding-top: 80px;
   }
 
+  .fadeIn_left {
+    opacity: 0;
+    transform: translate(-50%, 0);
+    transition: 2s;
+  }
+  .fadeIn_left.is-show {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+
+  .fadeIn_right {
+    opacity: 0;
+    transform: translate(50%, 0);
+    transition: 2s;
+  }
+  .fadeIn_right.is-show {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+
 /*-----------------------------------------------------------
   PC Styles
 ----------------------------------------------------------- */
@@ -304,6 +324,7 @@
       background-color: #ccc; /* 線の色 */
       margin: 0 auto
   }
+
   /*main*/
   /*contents*/
   /*about*/
