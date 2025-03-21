@@ -1,50 +1,60 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // ローダー処理
-    const loader = document.querySelector(".loader");
-    if (loader) {
-        setTimeout(() => {
-            loader.style.transition = "opacity 0.5s ease";
-            loader.style.opacity = "0";
-            setTimeout(() => {
-                loader.style.display = "none";
-            }, 500); // トランジション時間に合わせた遅延
-        }, 3000); // 3秒間表示
-    }
+  // 非同期関数を使用してローダー処理を実装
+  const initLoader = async () => {
+      const loader = document.querySelector(".loader");
+      if (loader) {
+          loader.style.transition = "opacity 0.5s ease";
+          loader.style.opacity = "0";
+          await new Promise(resolve => setTimeout(resolve, 500));
+          loader.style.display = "none";
+      }
+  };
 
-    // メニューボタン処理
-    const menuBtn = document.querySelector('.menu_btn');
-    const gnav = document.querySelector('.gnav');
+  // メニューボタン処理
+  const initMenu = () => {
+      const menuBtn = document.querySelector('.menu_btn');
+      const gnav = document.querySelector('.gnav');
 
-    if (menuBtn && gnav) {
-        menuBtn.addEventListener('click', () => {
-            // トグルクラスを追加/削除
-            gnav.classList.toggle('active');
+      if (menuBtn && gnav) {
+          menuBtn.addEventListener('click', () => {
+              gnav.classList.toggle('active');
+              const isExpanded = gnav.classList.contains('active');
+              menuBtn.setAttribute('aria-expanded', isExpanded);
+          });
 
-            // アクセシビリティ対応: aria-expanded属性の更新
-            const isExpanded = gnav.classList.contains('active');
-            menuBtn.setAttribute('aria-expanded', isExpanded);
-        });
+          const links = gnav.querySelectorAll('a');
+          links.forEach(link => {
+              link.addEventListener('click', () => {
+                  gnav.classList.remove('active');
+                  menuBtn.setAttribute('aria-expanded', 'false');
+              });
+          });
 
-        // リンク押下時にアコーディオンを閉じる
-        const links = gnav.querySelectorAll('a');
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                // アコーディオンを閉じる
-                gnav.classList.remove('active');
+          document.addEventListener('click', (event) => {
+              if (!menuBtn.contains(event.target) && !gnav.contains(event.target)) {
+                  gnav.classList.remove('active');
+                  menuBtn.setAttribute('aria-expanded', 'false');
+              }
+          });
+      }
+  };
 
-                // aria-expandedをfalseに設定
-                menuBtn.setAttribute('aria-expanded', 'false');
-            });
-        });
+  // Intersection Observer を使用して inview を検知
+  const initInview = () => {
+      const inviewElements = document.querySelectorAll('.inview');
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('is-show');
+              }
+          });
+      });
 
-        //領域外を押下時にアコーディオンを閉じる
-        // 領域外をクリックした場合に閉じる
-        document.addEventListener('click', (event) => {
-            // クリックした場所がmenuBtnやgnavでない場合
-            if (!menuBtn.contains(event.target) && !gnav.contains(event.target)) {
-                gnav.classList.remove('active');
-                menuBtn.setAttribute('aria-expanded', 'false');
-            }
-        });
-    }
+      inviewElements.forEach(el => observer.observe(el));
+  };
+
+  // 初期化関数呼び出し
+  initLoader();
+  initMenu();
+  initInview();
 });
