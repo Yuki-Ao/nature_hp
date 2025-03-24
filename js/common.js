@@ -1,67 +1,74 @@
-$(function(){
-	"use strict";
-  
- 
-  //menu
-  var flag     = false;
-  var $menu    = $('.gnav');
-  var $menuBtn = $('.menu_btn');
-  var $menuIcon = $('.menu_btn_icon');
-  $menuBtn.on('click', function() {
-    if (!flag) {
-      var scrollTop = $(window).scrollTop();
-      $menuIcon.toggleClass("close");
-      $menu.fadeIn(400, "easeInOutQuad", function() {
-        flag = true;
-      });
-    } else {
-      $('html,body').scrollTop(scrollTop);
-      $menuIcon.removeClass("close");
-      $menu.fadeOut(400, "easeInOutQuad", function() {
-        flag = false;
-      });
+document.addEventListener("DOMContentLoaded", function () {
+  // 非同期関数を使用してローダー処理を実装
+  const initLoader = async () => {
+    const loader = document.querySelector(".loader");
+    if (loader) {
+        loader.style.transition = "opacity 0.5s ease";
+        
+        // 1秒間の待機
+        const minDisplayTime = new Promise(resolve => setTimeout(resolve, 1000));
+
+        // ページ読み込み完了を待機
+        const pageLoadComplete = new Promise(resolve => window.addEventListener('load', resolve));
+
+        // 両方の完了を待機
+        await Promise.all([minDisplayTime, pageLoadComplete]);
+
+        // ローダーをフェードアウト
+        loader.style.opacity = "0";
+        await new Promise(resolve => setTimeout(resolve, 500));
+        loader.style.display = "none";
     }
-  });
-  $('.gnav a').click(function(){
-    $menuIcon.removeClass("close");
-    $menu.fadeOut(400, "easeInOutQuad", function() {
-      flag = false;
-    });
-  });
-  
-  // video size set
-  $(window).on('load',function(){
-      setVideo();
-  });
-  
-  var resizeTimer = false;
-  $(window).on('resize',function(){
-    if (resizeTimer !== false) {
-      clearTimeout(resizeTimer);
-    }
-    resizeTimer = setTimeout(function() {
-      setVideo();
-    }, 100);
-  });
-  
-  function setVideo(){
-    var baseW = 1280;
-    var baseH = 720;
-    
-    /* footer video */
-    var footerW = $('.footer_video_wrapper').outerWidth();
-    var footerH = $('.footer_video_wrapper').outerHeight();
-    var footerRation = getFooterRatio(footerW, footerH, baseW, baseH);
-    $('.footer_video_wrapper .video').css({
-			'width':parseInt(baseW * footerRation)+2,
-			'height':parseInt(baseH * footerRation)+2,
-			'margin-top':-(parseInt(baseH * footerRation) - footerH) / 2,
-			'margin-left':-(parseInt(baseW * footerRation) - footerW) / 2
-		});
-  }
-  /* footer video */
-  function getFooterRatio(footerW, footerH, baseW, baseH) {
-		if ((footerH / footerW) < (baseH / baseW))  return (footerW / baseW);
-		else return (footerH / baseH);
-	}
+};
+
+  // メニューボタン処理
+  const initMenu = () => {
+      const menuBtn = document.querySelector('.menu_btn');
+      const gnav = document.querySelector('.gnav');
+
+      if (menuBtn && gnav) {
+          menuBtn.addEventListener('click', () => {
+              menuBtn.classList.toggle('active');
+              gnav.classList.toggle('active');
+              const isExpanded = gnav.classList.contains('active');
+              menuBtn.setAttribute('aria-expanded', isExpanded);
+          });
+
+          const links = gnav.querySelectorAll('a');
+          links.forEach(link => {
+              link.addEventListener('click', () => {
+                  menuBtn.classList.remove('active');
+                  gnav.classList.remove('active');
+                  menuBtn.setAttribute('aria-expanded', 'false');
+              });
+          });
+
+          document.addEventListener('click', (event) => {
+              if (!menuBtn.contains(event.target) && !gnav.contains(event.target)) {
+                  menuBtn.classList.remove('active');
+                  gnav.classList.remove('active');
+                  menuBtn.setAttribute('aria-expanded', 'false');
+              }
+          });
+      }
+  };
+
+  // Intersection Observer を使用して inview を検知
+  const initInview = () => {
+      const inviewElements = document.querySelectorAll('.inview');
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('is-show');
+              }
+          });
+      });
+
+      inviewElements.forEach(el => observer.observe(el));
+  };
+
+  // 初期化関数呼び出し
+  initLoader();
+  initMenu();
+  initInview();
 });
