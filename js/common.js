@@ -1,14 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
   // 非同期関数を使用してローダー処理を実装
   const initLoader = async () => {
-      const loader = document.querySelector(".loader");
-      if (loader) {
-          loader.style.transition = "opacity 0.5s ease";
-          loader.style.opacity = "0";
-          await new Promise(resolve => setTimeout(resolve, 500));
-          loader.style.display = "none";
-      }
-  };
+    const loader = document.querySelector(".loader");
+    if (loader) {
+        loader.style.transition = "opacity 0.5s ease";
+        
+        // 1秒間の待機
+        const minDisplayTime = new Promise(resolve => setTimeout(resolve, 1000));
+
+        // ページ読み込み完了を待機
+        const pageLoadComplete = new Promise(resolve => window.addEventListener('load', resolve));
+
+        // 両方の完了を待機
+        await Promise.all([minDisplayTime, pageLoadComplete]);
+
+        // ローダーをフェードアウト
+        loader.style.opacity = "0";
+        await new Promise(resolve => setTimeout(resolve, 500));
+        loader.style.display = "none";
+    }
+};
 
   // メニューボタン処理
   const initMenu = () => {
