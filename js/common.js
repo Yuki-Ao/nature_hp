@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (menuBtn && gnav) {
           menuBtn.addEventListener('click', () => {
+              menuBtn.classList.toggle('active');
               gnav.classList.toggle('active');
               const isExpanded = gnav.classList.contains('active');
               menuBtn.setAttribute('aria-expanded', isExpanded);
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const links = gnav.querySelectorAll('a');
           links.forEach(link => {
               link.addEventListener('click', () => {
+                  menuBtn.classList.remove('active');
                   gnav.classList.remove('active');
                   menuBtn.setAttribute('aria-expanded', 'false');
               });
@@ -32,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           document.addEventListener('click', (event) => {
               if (!menuBtn.contains(event.target) && !gnav.contains(event.target)) {
+                  menuBtn.classList.remove('active');
                   gnav.classList.remove('active');
                   menuBtn.setAttribute('aria-expanded', 'false');
               }
